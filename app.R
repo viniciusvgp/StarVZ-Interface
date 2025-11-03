@@ -293,7 +293,9 @@ server <- function(input, output, session) {
       type = "scatter", split = ~Value, color = I(plotly_data$Color),
       line = list(width = 0.5)
     ) %>% layout(
-      xaxis = list(title = "Time (ms)", rangeslider = list(visible = TRUE)),
+      xaxis = list(title = "Time (ms)"
+                 #, rangeslider = list(visible = TRUE)
+                   ),
       yaxis = list(title = "Resource"),
       showlegend = input$st_legend, hovermode = "closest", dragmode = "zoom"
     )
