@@ -69,6 +69,9 @@ sidebar_ui <- function() {
                                    choices = c("ALL", "1CPU_per_NODE", "1GPU_per_NODE", "FIRST_LAST", "NODES_only", "NODES_1_in_10", "1CPU_1GPU", "ALL_nompi"),
                                    selected = "FIRST_LAST")
       ),
+      h3("4. General"),
+      hr(),
+      uiOutput("slider_limits"),
       
       hr(),
       actionButton("plotly_button", "Generate Interactive Plot", class = "btn"),
@@ -216,6 +219,10 @@ server <- function(input, output, session) {
       temp_data$config$st$labels <- input$st_labels
       #remover
       temp_data$config$kiteration$subite = FALSE
+
+      # limits from slider
+      temp_data$config$limits$start <- input$range_limit[1]
+      temp_data$config$limits$end <- input$range_limit[2]
       
       if (input$workflow_type == "StarVZ") {
         temp_data$config$st$idleness <- input$st_idleness
@@ -342,6 +349,21 @@ server <- function(input, output, session) {
       )
     }
   )
+
+  output$slider_limits <- renderUI({
+      req(rv$dado)
+      rv$dado$Application %>%
+          pull(End) %>%
+          max(na.rm = TRUE) %>%
+          round(2) -> max_val
+      sliderInput(
+          inputId = "range_limit",
+          label = "Selecione o intervalo:",
+          min = 0,
+          max = max_val,
+          value = c(0, max_val)
+      )
+  })
   
   observeEvent(event_data("plotly_click"), {
     click_data <- event_data("plotly_click")
