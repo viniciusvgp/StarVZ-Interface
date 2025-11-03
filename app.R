@@ -55,6 +55,7 @@ sidebar_ui <- function() {
                          conditionalPanel("input.st_idleness == true",
                                           checkboxInput("st_idleness_all", "Idleness All", FALSE)
                          ),
+                         checkboxInput("st_abe", "ABE", FALSE),
                          checkboxInput("st_cpb", "CPB", FALSE),
                          checkboxInput("st_tasks_active", "Highlight Tasks", FALSE),
                          conditionalPanel("input.st_tasks_active == true",
@@ -220,6 +221,7 @@ server <- function(input, output, session) {
         temp_data$config$st$idleness <- input$st_idleness
         temp_data$config$st$idleness_all <- input$st_idleness_all
         temp_data$config$st$cpb <- input$st_cpb
+        temp_data$config$st$abe$active <- input$st_abe
         
         if (is.null(temp_data$config$st$tasks)) {
           temp_data$config$st$tasks <- list()
