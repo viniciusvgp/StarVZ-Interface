@@ -376,5 +376,14 @@ server <- function(input, output, session) {
   })
 }
 
+args = commandArgs(trailingOnly=TRUE)
+
 # Initialize the Shiny app
-shinyApp(ui = ui, server = server)
+if (length(args)==0) {
+    shinyApp(ui = ui, server = server)
+} else if (length(args)==1) {
+    port = as.integer(args[1])
+    print(paste("Running on port:", port))
+    options(shiny.port = port)
+    shinyApp(ui = ui, server = server)
+}
