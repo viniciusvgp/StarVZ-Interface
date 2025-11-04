@@ -57,6 +57,17 @@ sidebar_ui <- function() {
                          ),
                          checkboxInput("st_abe", "ABE", FALSE),
                          checkboxInput("st_cpb", "CPB", FALSE),
+                         checkboxInput("st_agg", "Aggregation", FALSE),
+                         conditionalPanel("input.st_agg == true",
+                                          selectInput("st_agg_method", "Aggregation Method:",
+                                                      choices = c("dynamic", "static", "nodes"),
+                                                      selected = "dynamic"),
+                                          # RÓTULO ATUALIZADO AQUI
+                                          numericInput("st_agg_step", "Aggregation step: ", value = "1000")
+                         ),
+                         conditionalPanel("input.st_agg == true && input.st_agg_method == 'dynamic'",
+                                          textInput("st_agg_states", "States to aggregate: ")
+                         ),
                          checkboxInput("st_tasks_active", "Highlight Tasks", FALSE),
                          conditionalPanel("input.st_tasks_active == true",
                                           numericInput("st_tasks_levels", "Levels", value = 3, min = 1, step = 1),
@@ -229,7 +240,14 @@ server <- function(input, output, session) {
         temp_data$config$st$idleness_all <- input$st_idleness_all
         temp_data$config$st$cpb <- input$st_cpb
         temp_data$config$st$abe$active <- input$st_abe
+
+        # aggregation 
+        temp_data$config$st$aggregation$active <- input$st_agg
+        temp_data$config$st$aggregation$method <- input$st_agg_method
+        temp_data$config$st$aggregation$step <- input$st_agg_step
+        temp_data$config$st$aggregation$states <- input$st_agg_states
         
+        # task dependency chain
         if (is.null(temp_data$config$st$tasks)) {
           temp_data$config$st$tasks <- list()
         }
