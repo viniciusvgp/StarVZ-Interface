@@ -294,6 +294,7 @@ server <- function(input, output, session) {
       line = list(width = 0.5)
     ) %>% layout(
       xaxis = list(title = "Time (ms)"
+                   , range = c(d$config$limits$start,d$config$limits$end)
                  #, rangeslider = list(visible = TRUE)
                    ),
       yaxis = list(title = "Resource"),
