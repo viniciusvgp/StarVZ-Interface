@@ -75,6 +75,7 @@ sidebar_ui <- function() {
                                           numericInput("st_tasks_list", "Task ID to Highlight", value = "1")
                          )
                        ),
+                       checkboxInput("st_rectoutline", "Tasks border", FALSE),
                        
                        selectInput("st_labels", "Resource Labels:",
                                    choices = c("ALL", "1CPU_per_NODE", "1GPU_per_NODE", "FIRST_LAST", "NODES_only", "NODES_1_in_10", "1CPU_1GPU", "ALL_nompi"),
@@ -230,6 +231,8 @@ server <- function(input, output, session) {
       temp_data$config$st$labels <- input$st_labels
       #remover
       temp_data$config$kiteration$subite = FALSE
+      # rect_outline
+      temp_data$config$st$rect_outline <- input$st_rectoutline
 
       # limits from slider
       temp_data$config$limits$start <- input$range_limit[1]
