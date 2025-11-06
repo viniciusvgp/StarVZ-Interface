@@ -287,6 +287,9 @@ server <- function(input, output, session) {
   output$plotly_plot <- renderPlotly({
     d <- data_to_plot()
     req(d, d$Application, nrow(d$Application) > 0)
+
+    # Y label data
+    yconfm <- starvz:::yconf(d$Application, d$config$st$labels, d$Y)
     
     plotly_raw_data <- d$Application %>%
       arrange(End) %>%
@@ -318,7 +321,9 @@ server <- function(input, output, session) {
                    , range = c(d$config$limits$start,d$config$limits$end)
                  #, rangeslider = list(visible = TRUE)
                    ),
-      yaxis = list(title = "Resource"),
+      yaxis = list(title = "Resource",
+                   tickvals = yconfm$Position + (yconfm$Height / 3),
+                   ticktext = as.character(yconfm$ResourceId)),
       showlegend = input$st_legend, hovermode = "closest", dragmode = "zoom"
     )
     
