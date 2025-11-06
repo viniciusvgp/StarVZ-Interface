@@ -317,11 +317,11 @@ server <- function(input, output, session) {
       type = "scatter", split = ~Value, color = I(plotly_data$Color),
       line = list(width = 0.5)
     ) %>% layout(
-      xaxis = list(title = "Time (ms)"
+      xaxis = list(title = "Time [ms]"
                    , range = c(d$config$limits$start,d$config$limits$end)
                  #, rangeslider = list(visible = TRUE)
                    ),
-      yaxis = list(title = "Resource",
+      yaxis = list(title = "Application Workers",
                    tickvals = yconfm$Position + (yconfm$Height / 3),
                    ticktext = as.character(yconfm$ResourceId)),
       showlegend = input$st_legend, hovermode = "closest", dragmode = "zoom"
