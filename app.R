@@ -50,8 +50,8 @@ sidebar_ui <- function() {
                        checkboxInput("st_makespan", "Makespan", FALSE),
                        checkboxInput("st_outliers", "Outliers", FALSE),
                        
-                       conditionalPanel(
-                         condition = "input.workflow_type == 'StarVZ'",
+#                       conditionalPanel(
+#                        condition = "input.workflow_type == 'StarVZ'",
                          checkboxInput("st_idleness", "Idleness", FALSE),
                          conditionalPanel("input.st_idleness == true",
                                           checkboxInput("st_idleness_all", "Idleness All", FALSE)
@@ -75,7 +75,8 @@ sidebar_ui <- function() {
                                           # RÓTULO ATUALIZADO AQUI
                                           numericInput("st_tasks_list", "Task ID to Highlight", value = "1")
                          )
-                       ),
+#                       )
+                      ,
                        checkboxInput("st_rectoutline", "Tasks border", FALSE),
                        
                        selectInput("st_labels", "Resource Labels:",
@@ -245,7 +246,7 @@ server <- function(input, output, session) {
       temp_data$config$limits$start <- input$range_limit[1]
       temp_data$config$limits$end <- input$range_limit[2]
       
-      if (input$workflow_type == "StarVZ") {
+#      if (input$workflow_type == "StarVZ") {
         temp_data$config$st$idleness <- input$st_idleness
         temp_data$config$st$idleness_all <- input$st_idleness_all
         temp_data$config$st$cpb <- input$st_cpb
@@ -272,7 +273,7 @@ server <- function(input, output, session) {
             temp_data$config$st$tasks$active <- TRUE
             temp_data$config$st$tasks$list <- c(as.character(task_id_input))
         }
-      }
+#      } #
     }
     
     if (!is.null(temp_data$config$kiteration)) temp_data$config$kiteration$active <- input$panel_kiteration_active
