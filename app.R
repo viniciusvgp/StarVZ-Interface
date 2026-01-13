@@ -84,6 +84,7 @@ sidebar_ui <- function() {
       h3("4. General"),
       hr(),
       uiOutput("slider_limits"),
+      checkboxInput("panel_log", "Enable log", value = FALSE),
       
       hr(),
       actionButton("plotly_button", "Generate Interactive Plot", class = "btn"),
@@ -216,6 +217,10 @@ server <- function(input, output, session) {
   data_to_plot <- reactive({
     req(rv$dado)
     temp_data <- rv$dado
+
+    if (input$panel_log) {
+        starvz_set_log(TRUE)
+    }
     
     if (input$workflow_type == "StarVZ") {
       if (!is.null(temp_data$config$submitted)) temp_data$config$submitted$active <- input$panel_submitted_active
