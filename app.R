@@ -40,7 +40,8 @@ sidebar_ui <- function() {
         condition = "input.workflow_type == 'StarVZ'",
         checkboxInput("panel_submitted_active", "Submitted Tasks", value = FALSE),
         checkboxInput("panel_starpu_active", "StarPU Activity", value = FALSE),
-        checkboxInput("panel_ready_active", "Ready Queue", value = FALSE)
+        checkboxInput("panel_ready_active", "Ready Queue", value = FALSE),
+        checkboxInput("panel_lackready_active", "Lack Ready", value = FALSE)
       ),
       
       h3("3. Options (Space-Time Panel)"),
@@ -226,6 +227,7 @@ server <- function(input, output, session) {
       if (!is.null(temp_data$config$submitted)) temp_data$config$submitted$active <- input$panel_submitted_active
       if (!is.null(temp_data$config$starpu)) temp_data$config$starpu$active <- input$panel_starpu_active
       if (!is.null(temp_data$config$ready)) temp_data$config$ready$active <- input$panel_ready_active
+      if (!is.null(temp_data$config$lackready)) temp_data$config$lackready$active <- input$panel_lackready_active
     }
     
     if (!is.null(temp_data$config$st)) {
@@ -345,6 +347,7 @@ server <- function(input, output, session) {
       active_panels$submitted <- input$panel_submitted_active
       active_panels$starpu <- input$panel_starpu_active
       active_panels$ready <- input$panel_ready_active
+      active_panels$lackready <- input$panel_lackready_active
     }
     tagList(
       plotOutput("plot", width = "100%", height = calculate_height(active_panels)),
